@@ -5,6 +5,9 @@
 - Users can Enable Video and Disable Video.
 - Users can Send Messages to the Channel.
 
+
+#### Link for [demo](https://kg79w.csb.app/) 
+
 ### How to get Authenticated ?
 You can create a userid and corresponding RTM Token by calling the following API. RtmToken header contains the Token you can use to enter the Token.
 ```
@@ -26,6 +29,8 @@ channelId = acmptestchannel
 user = abc
 Token = 00625bec3a401354e54b024909003asdsadas461asse8dIAA2MMrs83g7VWhQLfUG3eAKQnXtTn64M1ASyU78VUIS2sJBJDUAAAAAEACHSecBydX8YQEA6APJ1fxh
 ```
+
+
 
 ### Screenshots
 ![alt text](https://github.com/Achuthananda/AgoraSAInterview/blob/master/assets/img/ss.jpg)
