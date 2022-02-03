@@ -16,7 +16,7 @@ var localTracks = {
 var localTrackState = {
   videoTrackEnabled: true,
   audioTrackEnabled: true
-}
+};
 var remoteUsers = {};
 // Agora rtclient options
 var options = {
@@ -24,17 +24,17 @@ var options = {
   rtc_channel: null,
   uid: null,
   token: null,
-  name : null,
+  name: null,
   role: "host" // host or audience
 };
 
 $("#host-join").click(function (e) {
   options.role = "host";
-})
+});
 
 $("#audience-join").click(function (e) {
   options.role = "audience";
-})
+});
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
@@ -50,11 +50,11 @@ $("#join-form").submit(async function (e) {
   } finally {
     $("#leave").attr("disabled", false);
   }
-})
+});
 
 $("#leave").click(function (e) {
   leave();
-})
+});
 
 async function join() {
   // create Agora rtclient
@@ -71,13 +71,16 @@ async function join() {
   }
   // join the rtc_channel
   let tokenid1 =
-      "00625bec3a401354e54b024909003461e8dIABEs2fJgNdhozmRk4QcXSmw/Vd1r6JYIbStRSL6gTNRuszTqxYAAAAAEAD1z9KPF937YQEAAQAX3fth";
-  
+    "00625bec3a401354e54b024909003461e8dIABEs2fJgNdhozmRk4QcXSmw/Vd1r6JYIbStRSL6gTNRuszTqxYAAAAAEAD1z9KPF937YQEAAQAX3fth";
 
-  options.uid = await rtclient.join(options.appid, options.rtc_channel, tokenid1);
+  options.uid = await rtclient.join(
+    options.appid,
+    options.rtc_channel,
+    tokenid1
+  );
   if (options.role === "host") {
-    $('#mic-btn').prop('disabled', false);
-    $('#video-btn').prop('disabled', false);
+    $("#mic-btn").prop("disabled", false);
+    $("#video-btn").prop("disabled", false);
     rtclient.on("user-published", handleUserPublished);
     rtclient.on("user-joined", handleUserJoined);
     rtclient.on("user-left", handleUserLeft);
@@ -93,65 +96,84 @@ async function join() {
     console.log("Successfully published.");
   }
   /*RTC Channel Creation*/
-  var accountName = $('#username').val();
-  var agoraAppId = $('#appid').val();
-  var tokenId = $('#tokenId').val();
+  var accountName = $("#username").val();
+  var agoraAppId = $("#appid").val();
+  var tokenId = $("#tokenId").val();
 
   rtcclient = AgoraRTM.createInstance(agoraAppId, {
     enableLogUpload: false
   });
 
   // Login
-  rtcclient.login({
-    token:tokenId,
-    uid: accountName
-  }).then(() => {
-    console.log('AgoraRTM client login success. Username: ' + accountName);
-    isLoggedIn = true;
+  rtcclient
+    .login({
+      token: tokenId,
+      uid: accountName
+    })
+    .then(() => {
+      console.log("AgoraRTM client login success. Username: " + accountName);
+      isLoggedIn = true;
 
-    // Channel Join
-    var channelName = $("#channel").val();
-    channel = rtcclient.createChannel(channelName);
-    document.getElementById("channelNameBox").innerHTML = channelName;
-    channel.join().then(() => {
-        console.log('AgoraRTM client channel join success.');
-        $("#joinChannelBtn").prop("disabled", true);
-        $("#sendMsgBtn").prop("disabled", false);
+      // Channel Join
+      var channelName = $("#channel").val();
+      channel = rtcclient.createChannel(channelName);
+      document.getElementById("channelNameBox").innerHTML = channelName;
+      channel
+        .join()
+        .then(() => {
+          console.log("AgoraRTM client channel join success.");
+          $("#joinChannelBtn").prop("disabled", true);
+          $("#sendMsgBtn").prop("disabled", false);
 
-        // Close Channel Join Modal
-        $("#joinChannelModal").modal('close');
+          // Close Channel Join Modal
+          $("#joinChannelModal").modal("close");
 
-        // Send Channel Message
-        $("#sendMsgBtn").click(function () {
-            singleMessage = $('#channelMsg').val();
-            channel.sendMessage({
+          // Send Channel Message
+          $("#sendMsgBtn").click(function () {
+            singleMessage = $("#channelMsg").val();
+            channel
+              .sendMessage({
                 text: singleMessage
-            }).then(() => {
+              })
+              .then(() => {
                 console.log("Message sent successfully.");
-                console.log("Your message was: " + singleMessage + " by " + accountName);
-                $("#messageBox").append("<br> <b>Sender:</b> " + accountName + "<br> <b>Message: </b> <span style='white-space: pre-wrap;'>" + singleMessage + "</span><br>");
-                $('#channelMsg').val('');
-            }).catch(error => {
+                console.log(
+                  "Your message was: " + singleMessage + " by " + accountName
+                );
+                $("#messageBox").append(
+                  "<br> <b>Sender:</b> " +
+                    accountName +
+                    "<br> <b>Message: </b> <span style='white-space: pre-wrap;'>" +
+                    singleMessage +
+                    "</span><br>"
+                );
+                $("#channelMsg").val("");
+              })
+              .catch((error) => {
                 console.log("Message wasn't sent due to an error: ", error);
-            });
+              });
 
             // Receive Channel Message
-            channel.on('ChannelMessage', ({
-                text
-            }, senderId) => {
-                console.log("Message received successfully.");
-                console.log("The message is: " + text + " by " + senderId);
-                $("#messageBox").append("<br> <b>Sender:</b> " + senderId + "<br> <b>Message: </b> <span style='white-space: pre-wrap;'>" + text + "</span><br>");
+            channel.on("ChannelMessage", ({ text }, senderId) => {
+              console.log("Message received successfully.");
+              console.log("The message is: " + text + " by " + senderId);
+              $("#messageBox").append(
+                "<br> <b>Sender:</b> " +
+                  senderId +
+                  "<br> <b>Message: </b> <span style='white-space: pre-wrap;'>" +
+                  text +
+                  "</span><br>"
+              );
             });
+          });
+        })
+        .catch((error) => {
+          console.log("AgoraRTM client channel join failed: ", error);
+        })
+        .catch((err) => {
+          console.log("AgoraRTM client login failure: ", err);
         });
-
-    }).catch(error => {
-        console.log('AgoraRTM client channel join failed: ', error);
-    }).catch(err => {
-        console.log('AgoraRTM client login failure: ', err);
     });
-});
-
 }
 
 async function leave() {
@@ -160,8 +182,8 @@ async function leave() {
     if (track) {
       track.stop();
       track.close();
-      $('#mic-btn').prop('disabled', true);
-      $('#video-btn').prop('disabled', true);
+      $("#mic-btn").prop("disabled", true);
+      $("#video-btn").prop("disabled", true);
       localTracks[trackName] = undefined;
     }
   }
@@ -176,7 +198,7 @@ async function leave() {
   $("#leave").attr("disabled", true);
   hideMuteButton();
   console.log("Client successfully left rtc_channel.");
-  
+
   channel.leave();
   rtcclient.logout();
   isLoggedIn = false;
@@ -189,9 +211,9 @@ async function subscribe(user, mediaType) {
   // subscribe to a remote user
   await rtclient.subscribe(user, mediaType);
   console.log("achuth:Successfully subscribed to user");
-  if (mediaType === 'video') {
+  if (mediaType === "video") {
     const player = $(`
-      <div id="player-wrapper-${uid}">
+      <div id="player-wrapper-${uid}" class="col-sm">
         <p class="player-name">remoteUser(${uid})</p>
         <div id="player-${uid}" class="player"></div>
       </div>
@@ -199,7 +221,7 @@ async function subscribe(user, mediaType) {
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
   }
-  if (mediaType === 'audio') {
+  if (mediaType === "audio") {
     user.audioTrack.play();
   }
 }
@@ -241,7 +263,7 @@ $("#video-btn").click(function (e) {
   } else {
     unmuteVideo();
   }
-})
+});
 
 // Hide mute buttons
 function hideMuteButton() {
