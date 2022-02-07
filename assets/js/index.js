@@ -71,7 +71,7 @@ async function join() {
   }
   // join the rtc_channel
   let tokenid1 =
-    "00625bec3a401354e54b024909003461e8dIABEs2fJgNdhozmRk4QcXSmw/Vd1r6JYIbStRSL6gTNRuszTqxYAAAAAEAD1z9KPF937YQEAAQAX3fth";
+    "00625bec3a401354e54b024909003461e8dIACJ4UK8OUltbgRHjpaJdIU8jAYxwRqsiEnMPamnAmZrcszTqxYAAAAAEADbqsx0CQwCYgEAAQAJDAJi";
 
   options.uid = await rtclient.join(
     options.appid,
