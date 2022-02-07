@@ -11,7 +11,7 @@
 ### How to get Authenticated ?
 You can create a userid and corresponding RTM Token by calling the following API. RtmToken header contains the Token you can use to enter the Token.
 ```
-curl -IXGET http://rtm.achuth.tech/rtmtoken?userid=abc | grep RtmToken
+curl -IXGET http://rtm.achuth.tech/rtmtoken?userid=abc
 HTTP/1.1 200 OK
 Date: Thu, 03 Feb 2022 07:29:13 GMT
 Server: Apache/2.4.41 (Ubuntu)
