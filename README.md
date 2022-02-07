@@ -6,7 +6,7 @@
 - Users can Send Messages to the Channel.
 
 
-#### Link for [demo](https://kg79w.csb.app/) 
+#### Link for [demo](https://p0irt.csb.app/) 
 
 ### How to get Authenticated ?
 You can create a userid and corresponding RTM Token by calling the following API. RtmToken header contains the Token you can use to enter the Token.
