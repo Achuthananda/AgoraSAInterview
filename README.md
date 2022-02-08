@@ -21,16 +21,13 @@ Vary: Accept-Encoding
 Content-Type: text/html; charset=utf-8
 ```
 
-### Fixed Parameters
-For the Assignment Purpose, Following parameters are fixed. RTC Token is hardcoded . You can use the userid and token generated from the previous section.
+### Parameters
+For the Assignment Purpose, Following parameters are fixed. RTC Token is automatically fecthed . You can use the userid and token generated from the previous section.
 ```
 appId = 25bec3a401354e54b024909003461e8d
 channelId = acmptestchannel
 user = abc
-Token = 00625bec3a401354e54b024909003asdsadas461asse8dIAA2MMrs83g7VWhQLfUG3eAKQnXtTn64M1ASyU78VUIS2sJBJDUAAAAAEACHSecBydX8YQEA6APJ1fxh
 ```
-
-
 
 ### Screenshots
 ![alt text](https://github.com/Achuthananda/AgoraSAInterview/blob/master/assets/img/ss.jpg)

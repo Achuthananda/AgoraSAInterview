@@ -28,6 +28,13 @@ var options = {
   role: "host" // host or audience
 };
 
+var tokenid1 = ''
+axios.get('https://message.achuth.tech/rtctoken').then((response) => {
+  console.log('Token is:',response.headers['rtctoken']);
+  tokenid1 = response.headers['rtctoken'];
+});
+
+
 $("#host-join").click(function (e) {
   options.role = "host";
 });
@@ -38,13 +45,15 @@ $("#audience-join").click(function (e) {
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
+  // join the rtc_channel
+  
   $("#host-join").attr("disabled", true);
   $("#audience-join").attr("disabled", true);
   try {
     options.appid = $("#appid").val();
     options.rtc_channel = $("#channel").val();
     options.name = $("#username").val();
-    await join();
+    await join(tokenid1);
   } catch (error) {
     console.error(error);
   } finally {
@@ -56,7 +65,7 @@ $("#leave").click(function (e) {
   leave();
 });
 
-async function join() {
+async function join(tokenid1) {
   // create Agora rtclient
   rtclient.setClientRole(options.role);
   $("#mic-btn").prop("disabled", false);
@@ -69,9 +78,9 @@ async function join() {
     rtclient.on("user-joined", handleUserJoined);
     rtclient.on("user-left", handleUserLeft);
   }
-  // join the rtc_channel
-  let tokenid1 =
-    "00625bec3a401354e54b024909003461e8dIACJ4UK8OUltbgRHjpaJdIU8jAYxwRqsiEnMPamnAmZrcszTqxYAAAAAEADbqsx0CQwCYgEAAQAJDAJi";
+
+  //let tokenid1 =
+  //  "00625bec3a401354e54b024909003461e8dIABOZREgwfW4EemmHnIz4ok9g1oTbWt/zsLsHO+EyophDczTqxYAAAAAIgBUbv0BMsADYgQAAQAywANiAgAywANiAwAywANiBAAywANi";
 
   options.uid = await rtclient.join(
     options.appid,
